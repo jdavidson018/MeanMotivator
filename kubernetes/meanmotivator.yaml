@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: meanmotivator-deployment
+spec:
+  selector:
+    matchLabels:
+      app: meanmotivator
+  template:
+    metadata:
+      labels:
+        app: meanmotivator
+    spec:
+      containers:
+      - name: meanmotivator
+        image: jdavid123/meanmotivator:v2
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+        - name: MongoDbSettings__Host
+          value: mongodb-service
+        - name: MongoDbSettings__Password
+          valueFrom:
+            secretKeyRef:
+              name: meanmotivator-secrets
+              key: mongodb-password
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 80
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: meanmotivator-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: meanmotivator
+  ports:
+  - port: 80
+    targetPort: 80
+
