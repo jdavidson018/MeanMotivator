@@ -40,7 +40,7 @@ namespace MeanMotivator
                 q.AddTrigger(opts => opts
                     .ForJob(jobKey) // link to the HelloWorldJob
                     .WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
-                    .WithCronSchedule("0/10 * * * * ?")); // run every 5 seconds
+                    .WithCronSchedule("0 6 1 * * ?")); // run every 5 seconds
 
             });
                 // Add the Quartz.NET hosted service
