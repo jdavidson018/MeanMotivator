@@ -44,5 +44,10 @@ namespace MeanMotivator.Repositories{
             comments.RemoveAt(index);
             await Task.CompletedTask;
         }
+
+        public Task<Comment> GetRandomCommentAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

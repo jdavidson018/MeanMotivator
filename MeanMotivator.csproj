@@ -1,11 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>dc780df7-ea60-4c95-b8d5-25d27ea95d17</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="5.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
+    <PackageReference Include="MongoDB.Driver" Version="2.13.1"/>
+    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="5.0.1"/>
+    <PackageReference Include="Quartz" Version="3.3.3"/>
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0"/>
+    <PackageReference Include="MessageBird" Version="3.1.0"/>
+    <PackageReference Include="Twilio" Version="5.65.0"/>
   </ItemGroup>
 </Project>

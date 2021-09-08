@@ -48,7 +48,8 @@
         ```docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD={password} mongo```
     2.  Save the password for the container as a secret
         ```dotnet user-secrets init```
-        ```dotnet user-secrets set MongoDbSettings:Password {value}```  
+        ```dotnet user-secrets set MongoDbSettings:Password {value}``` 
+        ```dotnet user-secrets set TwilioAuthToken {token}```
     3. Create a settings file that will be used to populate connection information from the appsettings file
         ```Settings.MongoDbSettings.cs```
     4. Add the rest of the DB settings to the app settings
@@ -144,38 +145,21 @@
 3. Start new mongo container on the correct network
     ```docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=wN6p5quFGaPuaF --network=meanmotivatornet mongo```
 4. Run API image on the correct network
-```docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=wN6p5quFGaPuaF --network=meanmotivatornet jdavid123/meanmotivator:v1```
+```docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=wN6p5quFGaPuaF -e TwilioAuthToken=5d8bb69ca1d70761a1b9990a3608ce4d --network=meanmotivatornet jdavid123/meanmotivator:v2```
 5. At this point, you will have to run the endpoints using http, you can change the port to 8080.
 
-## Running with kubernetes
-1. Locally, turn on kubernetes
-2. Check that we are using the right cluster (should be docker desktop)
-```kubectl config current-context```
-3. Start declaring how we want to deploy everything using Kubernetes VS Code extension
-    * Create ```meanmotivator.yaml```
-    * Create ```mongodb.yaml```
-4. Kubernetes secret management
-```kubectl create secret generic meanmotivator-secrets --from-literal=mongodb-password='wN6p5quFGaPuaF'```
-5. Apply yaml file to a container
-```kubectl apply -f ./meanmotivator.yaml```
-or
-```kubectl apply -f ./mongodb.yaml```
-6. List deployments
-```kubectl get deployments```
-7. List pods
-```kubectl get pods```
-8. Get logs
-```kubectl logs {pod name}```
-9. Get stateful sets
-```kubectl get statefulsets```
-10. To scale
-```kubectl scale deployment/meanmotivator-deployment --replicas=3```
-11. Create new image version
-```docker build -t jdavid123/meanmotivator:v2 .```
-* Then change the image version in the yaml files
-* Apply changes again
-```kubectl apply -f ./meanmotivator.yaml```
-
-12. Remove all ports from postman requests
-
+***I am completely ignoring kubernetes at this point. To run on scout, you just need to clone the repository and create the image on the server because apple silicon goofs it up.***
 ## Running on Scout web server
+1. Clone the repository on scout
+    ```git clone https://github.com/jdavidson018/MeanMotivator.git```
+2. ```cd MeanMotivator```
+3. Install kubernetes if not already done
+    ```https://ubuntu.com/kubernetes/install```
+4. Dashboard is not working...
+5. Run command from section above but prefix with microk8s
+
+## Updating the project
+1. Commit code
+2. Pull on the server, rebuild and push the image.
+3. Build the image again
+```docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=wN6p5quFGaPuaF --network=meanmotivatornet jdavid123/meanmotivator:v2```

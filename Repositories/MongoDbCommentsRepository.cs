@@ -45,5 +45,13 @@ namespace MeanMotivator.Repositories{
             var filter = filterBuilder.Eq(existingComment => existingComment.Id, comment.Id);
             await commentsCollection.ReplaceOneAsync(filter, comment);
         }
+
+        public async Task<Comment> GetRandomCommentAsync()
+        {
+            var allComments = await commentsCollection.Find(new BsonDocument()).ToListAsync();
+            var random = new Random();
+            int index = random.Next(allComments.Count);
+            return await Task.FromResult(allComments[index]);
+        }
     }
 }

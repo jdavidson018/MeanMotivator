@@ -12,5 +12,6 @@ namespace MeanMotivator.Repositories
         Task CreateCommentAsync(Comment Comment);
         Task UpdateCommentAsync(Comment Comment);
         Task DeleteCommentAsync(Guid id);
+        Task<Comment> GetRandomCommentAsync();
     }
 }
