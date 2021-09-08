@@ -143,9 +143,9 @@
 2. Stop initial mongo
     ```docker stop mongo```
 3. Start new mongo container on the correct network
-    ```docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=wN6p5quFGaPuaF --network=meanmotivatornet mongo```
+    ```docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD={from bit} --network=meanmotivatornet mongo```
 4. Run API image on the correct network
-```docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=wN6p5quFGaPuaF -e TwilioAuthToken=5d8bb69ca1d70761a1b9990a3608ce4d --network=meanmotivatornet jdavid123/meanmotivator:v2```
+```docker run -it --rm --name meanmotivator -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password={from bit} -e TwilioAuthToken={From console} --network=meanmotivatornet jdavid123/meanmotivator:v2```
 5. At this point, you will have to run the endpoints using http, you can change the port to 8080.
 
 ***I am completely ignoring kubernetes at this point. To run on scout, you just need to clone the repository and create the image on the server because apple silicon goofs it up.***
@@ -162,4 +162,4 @@
 1. Commit code
 2. Pull on the server, rebuild and push the image.
 3. Build the image again
-```docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=wN6p5quFGaPuaF --network=meanmotivatornet jdavid123/meanmotivator:v2```
+```docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password={from bit} --network=meanmotivatornet jdavid123/meanmotivator:v2```
