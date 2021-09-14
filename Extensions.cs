@@ -16,5 +16,15 @@ namespace MeanMotivator
                 CreatedDate = comment.CreatedDate
             };
         }
+
+        public static WeightDto AsDto(this Weight weight)
+        {
+            return new WeightDto
+            {
+                Id = weight.Id,
+                Value = weight.Value,
+                CreatedDate = weight.CreatedDate
+            };
+        }
     }
 }
