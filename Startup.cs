@@ -36,14 +36,8 @@ namespace MeanMotivator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: "Default Policy",
-                                builder =>
-                                {
-                                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-                                });
-            });
+            services.AddCors();
+
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
             BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
             var mongoDbSettings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
@@ -88,8 +82,11 @@ namespace MeanMotivator
                 app.UseHttpsRedirection();
             }
             app.UseRouting();
-            app.UseCors("Default Pollicy");
 
+            app.UseCors(
+                    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            );            
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
