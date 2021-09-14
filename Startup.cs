@@ -41,7 +41,7 @@ namespace MeanMotivator
                 options.AddPolicy(name: "Default Policy",
                                 builder =>
                                 {
-                                    builder.AllowAnyOrigin();
+                                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
                                 });
             });
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
